@@ -3,39 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>This is my Personal Website</title>
+    <title>CLVI - Homepage</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="stars" class="stars"></div>
+	<div id="sky" class="sky"></div>
 
     <div class="container">
         <div class="header">
-            <div id="datetime" class="datetime"></div>
-        </div>
+			<button id="toggle-sidebar" class="sidebar-toggle">&#9776;</button>
+			<div id="current-song" class="current-song"></div>
+			<div id="datetime" class="datetime"></div>
+		</div>
+
+		<div id="sidebar" class="sidebar">
+			<!-- Tools section centered in the middle -->
+			<div class="tools">
+			<h2>[Tools]</h2>
+				<span class="tool-link" onclick="alert('Next Update?')">Password Generator</span>
+				<span class="tool-link" onclick="alert('Next Update?')">QR Generator</span>
+				<span class="tool-link" id="theme-toggle">Toggle Dark/Light Mode</span> <!-- New toggle button -->
+			</div>
+
+			<!-- Audio player fixed at the bottom -->
+			<div id="audio-player" class="audio-player">
+				<div class="audio-info">
+					<h3 id="song-title">Song Title</h3>
+					<p id="song-artist">Artist Name</p>
+				</div>
+				<div class="audio-controls">
+					<span id="prev-track" class="control-symbol">&#11244;</span> <!-- Unicode for Previous -->
+                    <span id="play-pause" class="control-symbol">&#11208;</span> <!-- Unicode for Play/Pause -->
+                    <span id="next-track" class="control-symbol">&#11246;</span> <!-- Unicode for Next -->
+				</div>
+				<div class="progress-bar">
+					<span id="current-time">0:00</span>
+					<input type="range" id="progress" value="0" max="100">
+					<span id="duration">3:00</span>
+				</div>
+			</div>
+		</div>
 
         <div class="content">
-            <div id="prev-button" class="nav-button">&lt;</div>
-            <div id="module-container" class="module-container">
-                <div id="front-page" class="module active-module">
-                    <h1 id="name">My Website<span class="typing-indicator">|</span></h1>
-                </div>
-                <div id="about-me" class="module">
-                    <h1>About Me</h1>
-                    <p>I like coding, eating, and experimenting with new ideas.</p>
-                </div>
-                <div id="frequently-used-websites" class="module">
-                    <h1>Frequently Used Websites</h1>
-                    <ul class="website-list">
-                        <li><a href="https://www.reddit.com" target="_blank">Reddit</a></li>
-                        <li><a href="https://www.4chan.org" target="_blank">4chan</a></li>
-                        <li><a href="https://www.twitter.com" target="_blank">Twitter</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div id="next-button" class="nav-button">&gt;</div>
-        </div>
+			<div id="module-container" class="module-container">
+				<div id="front-page" class="module active-module">
+					<center><h1 id="name">[Greetings, Friend..<span class="typing-indicator">|</span></h1></center>
+					<center><p>What brings you here?</p></center>
+				</div>
+				<div id="about-me" class="module">
+					<center><h1>About Me</h1></center>
+					<center><p>I like coding, eating, and experimenting with new ideas.</p></center>
+				</div>
+				<div id="frequently-used-websites" class="module">
+					<center><h1>Frequently Used Websites</h1></center>
+					<center>
+						<ul class="website-list">
+							<li><a href="https://www.reddit.com" target="_blank">Reddit</a></li>
+							<li><a href="https://www.4chan.org" target="_blank">4chan</a></li>
+							<li><a href="https://www.twitter.com" target="_blank">Twitter</a></li>
+						</ul>
+					</center>
+				</div>
+			</div>
+			<div id="down-button" class="nav-button">&#11167;</div> <!-- Single down button -->
+		</div>
     </div>
 
     <script src="scripts.js"></script>
