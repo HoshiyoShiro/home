@@ -9,66 +9,133 @@
 </head>
 <body>
     <div id="stars" class="stars"></div>
-	<div id="sky" class="sky"></div>
+    <div id="sky" class="sky"></div>
 
     <div class="container">
         <div class="header">
-			<button id="toggle-sidebar" class="sidebar-toggle">&#9776;</button>
-			<div id="current-song" class="current-song"></div>
-			<div id="datetime" class="datetime"></div>
-		</div>
+            <button id="toggle-sidebar" class="sidebar-toggle">&#9776;</button>
+            <div id="current-song" class="current-song"></div>
+            <div id="datetime" class="datetime"></div>
+        </div>
 
-		<div id="sidebar" class="sidebar">
-			<!-- Tools section centered in the middle -->
-			<div class="tools">
-			<h2>[Tools]</h2>
-				<span class="tool-link" onclick="alert('Next Update?')">Password Generator</span>
-				<span class="tool-link" onclick="alert('Next Update?')">QR Generator</span>
-				<span class="tool-link" id="theme-toggle">Toggle Dark/Light Mode</span> <!-- New toggle button -->
-			</div>
+        <div id="sidebar" class="sidebar">
+            <!-- Tools section centered in the middle -->
+            <div class="tools">
+                <h2>[Tools]</h2>
+                <span class="tool-link" onclick="openOverlay('password-generator-overlay')">Password Generator</span>
+                <span class="tool-link" onclick="openOverlay('regex-tester-overlay')">Regex Tester</span>
+                <span class="tool-link" onclick="openOverlay('json-formatter-overlay')">JSON Formatter</span>
+                <span class="tool-link" onclick="openOverlay('converter-overlay')">Bin/Dec/Hex Converter</span>
+                <span class="tool-link" onclick="openOverlay('qr-generator-overlay')">QR Code Generator</span>
+                <span class="tool-link" id="theme-toggle">Toggle Dark/Light Mode</span>
+            </div>
 
-			<!-- Audio player fixed at the bottom -->
-			<div id="audio-player" class="audio-player">
-				<div class="audio-info">
-					<h3 id="song-title">Song Title</h3>
-					<p id="song-artist">Artist Name</p>
-				</div>
-				<div class="audio-controls">
-					<span id="prev-track" class="control-symbol">&#11244;</span> <!-- Unicode for Previous -->
-                    <span id="play-pause" class="control-symbol">&#11208;</span> <!-- Unicode for Play/Pause -->
-                    <span id="next-track" class="control-symbol">&#11246;</span> <!-- Unicode for Next -->
-				</div>
-				<div class="progress-bar">
-					<span id="current-time">0:00</span>
-					<input type="range" id="progress" value="0" max="100">
-					<span id="duration">3:00</span>
-				</div>
-			</div>
-		</div>
+            <!-- Audio player fixed at the bottom -->
+            <div id="audio-player" class="audio-player">
+                <div class="audio-info">
+                    <h3 id="song-title">Song Title</h3>
+                    <p id="song-artist">Artist Name</p>
+                </div>
+                <div class="audio-controls">
+                    <span id="prev-track" class="control-symbol">&#11244;</span>
+                    <span id="play-pause" class="control-symbol">&#11208;</span>
+                    <span id="next-track" class="control-symbol">&#11246;</span>
+                </div>
+                <div class="progress-bar">
+                    <span id="current-time">0:00</span>
+                    <input type="range" id="progress" value="0" max="100">
+                    <span id="duration">3:00</span>
+                </div>
+                <div class="volume-bar">
+                    <span>&#128266;</span>
+                    <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+                </div>
+            </div>
+        </div>
 
         <div class="content">
-			<div id="module-container" class="module-container">
-				<div id="front-page" class="module active-module">
-					<center><h1 id="name">[Greetings, Friend..<span class="typing-indicator">|</span></h1></center>
-					<center><p>What brings you here?</p></center>
-				</div>
-				<div id="about-me" class="module">
-					<center><h1>About Me</h1></center>
-					<center><p>I like coding, eating, and experimenting with new ideas.</p></center>
-				</div>
-				<div id="frequently-used-websites" class="module">
-					<center><h1>Frequently Used Websites</h1></center>
-					<center>
-						<ul class="website-list">
-							<li><a href="https://www.reddit.com" target="_blank">Reddit</a></li>
-							<li><a href="https://www.4chan.org" target="_blank">4chan</a></li>
-							<li><a href="https://www.twitter.com" target="_blank">Twitter</a></li>
-						</ul>
-					</center>
-				</div>
-			</div>
-			<div id="down-button" class="nav-button">&#11167;</div> <!-- Single down button -->
-		</div>
+            <div id="module-container" class="module-container">
+                <div id="front-page" class="module active-module">
+                    <center><h1 id="name">Hello there...!<span class="typing-indicator">|</span></h1></center>
+                    <center><p>What brings you here?</p></center>
+                </div>
+                <div id="about-me" class="module">
+                    <center><h1>About Me</h1></center>
+                    <center><p>I am Hoshy and I like creating stuff, sleeping, and experimenting with new ideas.</p></center>
+                </div>
+                <div id="frequently-used-websites" class="module">
+                    <center><h1>Frequently Used Websites</h1></center>
+                    <center>
+                        <ul class="website-list">
+                            <li><a href="https://www.reddit.com" target="_blank">Reddit</a></li>
+                            <li><a href="https://www.4chan.org" target="_blank">4chan</a></li>
+                            <li><a href="https://www.twitter.com" target="_blank">Twitter</a></li>
+                            <li><a href="https://www.github.com" target="_blank">Github</a></li>
+							<li><a href="https://www.youtube.com" target="_blank">Youtube</a></li>
+                        </ul>
+                    </center>
+                </div>
+            </div>
+            <div id="down-button" class="nav-button">&#11167;</div>
+        </div>
+        
+        <!-- Tool Overlays -->
+        <div id="password-generator-overlay" class="overlay">
+            <div class="overlay-content">
+                <button onclick="closeOverlay('password-generator-overlay')" class="close-button">✖</button>
+                <h2>Password Generator</h2>
+                <input type="text" id="generated-password" class="input-field" readonly>
+                <button onclick="generatePassword()" class="button">Generate Password</button>
+                <div class="options">
+                    <label><input type="checkbox" id="include-lowercase" checked> Lowercase</label>
+                    <label><input type="checkbox" id="include-uppercase" checked> Uppercase</label>
+                    <label><input type="checkbox" id="include-numbers" checked> Numbers</label>
+                    <label><input type="checkbox" id="include-symbols" checked> Symbols</label>
+                    <label>Length: <input type="number" id="password-length" value="12" min="4" max="20" class="number-input"></label>
+                </div>
+            </div>
+        </div>
+
+        <div id="regex-tester-overlay" class="overlay">
+            <div class="overlay-content">
+                <button onclick="closeOverlay('regex-tester-overlay')" class="close-button">✖</button>
+                <h2>Regex Tester</h2>
+                <textarea id="regex-pattern" class="textarea-field" placeholder="Enter regex pattern here"></textarea>
+                <textarea id="regex-text" class="textarea-field" placeholder="Enter text to test here"></textarea>
+                <button onclick="testRegex()" class="button">Test Regex</button>
+                <div id="regex-results" class="result-area"></div>
+            </div>
+        </div>
+
+        <div id="json-formatter-overlay" class="overlay">
+            <div class="overlay-content">
+                <button onclick="closeOverlay('json-formatter-overlay')" class="close-button">✖</button>
+                <h2>JSON Formatter</h2>
+                <textarea id="json-input" class="textarea-field" placeholder="Paste JSON here"></textarea>
+                <button onclick="formatJSON()" class="button">Format JSON</button>
+                <pre id="json-output" class="json-output"></pre>
+            </div>
+        </div>
+
+        <div id="converter-overlay" class="overlay">
+            <div class="overlay-content">
+                <button onclick="closeOverlay('converter-overlay')" class="close-button">✖</button>
+                <h2>Bin/Dec/Hex Converter</h2>
+                <input id="binary" class="input-field" placeholder="Binary" oninput="convertFromBinary()">
+                <input id="decimal" class="input-field" placeholder="Decimal" oninput="convertFromDecimal()">
+                <input id="hexadecimal" class="input-field" placeholder="Hexadecimal" oninput="convertFromHex()">
+            </div>
+        </div>
+
+        <div id="qr-generator-overlay" class="overlay">
+            <div class="overlay-content">
+                <button onclick="closeOverlay('qr-generator-overlay')" class="close-button">✖</button>
+                <h2>QR Code Generator</h2>
+                <input id="qr-input" class="input-field" placeholder="Enter text">
+                <button onclick="generateQR()" class="button">Generate QR Code</button>
+                <div class="qr-display"><img id="qr-image" src="" alt="QR Code"></div>
+            </div>
+        </div>
     </div>
 
     <script src="scripts.js"></script>
