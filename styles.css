@@ -13,8 +13,73 @@ body {
 }
 
 .light-mode {
-    background-color: #f0f0f0; /* Light background */
+	background: linear-gradient(to bottom, 
+        #B5D8F7,
+        #C7E3FF
+      );
     color: #000; /* Dark text color for visibility */
+}
+
+.light-mode .sky {
+    display: block;
+}
+
+.dark-mode .sky {
+    display: none;
+}
+
+.sky {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.cloud-cluster {
+    position: absolute;
+    transform-origin: center center;
+    opacity: 0;
+    transition: opacity 8s ease-in-out;
+}
+
+.cloud-part {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+    border-radius: 50%;
+    filter: blur(30px);
+    transition: transform 12s ease-in-out;
+}
+
+.cloud-wisp {
+    position: absolute;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+    filter: blur(15px);
+    mix-blend-mode: soft-light;
+    transform-origin: center center;
+    opacity: 0;
+    transition: all 6s ease-in-out;
+}
+
+/* Additional animations for floating effect */
+@keyframes float-vertical {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(30px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes shape-shift {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1) rotate(2deg); }
+    100% { transform: scale(1); }
+}
+
+@keyframes wisp-fade {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+    100% { opacity: 0.3; }
 }
 
 .container {
@@ -38,6 +103,7 @@ body {
 
 .datetime {
     font-size: 1rem;
+	 margin-left: auto; /* Aligns datetime to the right */
 }
 
 .content {
@@ -50,11 +116,19 @@ body {
 }
 
 .nav-button {
-    font-size: 50px;
+    font-size: 30px;
     cursor: pointer;
     user-select: none;
-    transition: transform 0.3s;
-    color: #fff;
+    transition: transform 0.3s, color 0.3s;
+    color: #3A3A3A;  /* Dark color for light mode */
+}
+
+.dark-mode .nav-button {
+    color: #fff;  /* White color for dark mode */
+}
+
+.light-mode .nav-button {
+    color: #3A3A3A;  /* Ensure dark color in light mode */
 }
 
 .nav-button:hover {
@@ -92,70 +166,68 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
+	flex-direction: column;
     align-items: center;
     opacity: 0;
     transition: opacity 0.5s ease;
+	pointer-events: none;  /* Add this to prevent interaction when hidden */
+	visibility: hidden;
 }
 
 .module.active-module {
-    display: flex; /* Show the active module */
+    display: flex;
     opacity: 1;
+    pointer-events: auto;  /* Re-enable interaction only for active module */
+    z-index: 1;  /* Ensure active module is on top */
+	visibility: visible;
 }
 
-.module.slide-in-right {
-    animation: slideInRight 0.5s forwards;
+/* Move the down button to the center bottom */
+/* Button positioned at the center-bottom of the screen */
+#down-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10; /* Ensure button is above other content */
+    pointer-events: auto; /* Ensure button is clickable */
 }
 
-.module.slide-in-left {
-    animation: slideInLeft 0.5s forwards;
+/* Slide-up animations */
+.module.slide-up-out {
+    animation: slideUpOut 0.5s forwards;
 }
 
-.module.slide-out-right {
-    animation: slideOutRight 0.5s forwards;
+.module.slide-up-in {
+    animation: slideUpIn 0.5s forwards;
 }
 
-.module.slide-out-left {
-    animation: slideOutLeft 0.5s forwards;
-}
-
-@keyframes slideInRight {
+@keyframes slideUpOut {
     from {
-        transform: translateX(100%);
+        transform: translateY(0);
+        opacity: 1;
     }
     to {
-        transform: translateX(0);
+        transform: translateY(-100%);
+        opacity: 0;
     }
 }
 
-@keyframes slideInLeft {
+@keyframes slideUpIn {
     from {
-        transform: translateX(-100%);
+        transform: translateY(100%);
+        opacity: 0;
     }
     to {
-        transform: translateX(0);
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
-@keyframes slideOutRight {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(100%);
-    }
-}
-
-@keyframes slideOutLeft {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-100%);
-    }
-}
 
 .typing-indicator {
     animation: blink 1s step-end infinite;
@@ -230,4 +302,301 @@ body {
 
 .dark-mode .stars {
     display: block;
+}
+
+/* Sidebar styles */
+
+
+.light-mode .sidebar.open {
+    color: #000; /* Black color for light mode */
+	background-color: rgba(255, 255, 255, 0.55); /* Light mode background */
+}
+
+
+
+.sidebar-content {
+    padding: 20px;
+}
+
+.sidebar h2 {
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+
+.sidebar button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar button:hover {
+    background-color: #555;
+}
+
+/* Sidebar toggle button in the header */
+.sidebar-toggle {
+    font-size: 1.5rem;
+    background-color: transparent;
+    color: inherit;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-right: 15px;
+    transition: background-color 0.3s;
+    z-index: 200; /* Ensure toggle button is on top */
+}
+
+/* Toggle button hover effect */
+.sidebar-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+    border-radius: 5px;
+}
+
+/* Light and Dark Mode Variants for Toggle Button */
+.light-mode .sidebar-toggle {
+    color: #333;
+}
+
+.dark-mode .sidebar-toggle {
+    color: #fff;
+}
+
+/* Sidebar toggle button in the header */
+.header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+	padding: 0 20px;
+}
+
+.current-song {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1rem;
+    color: #fff;
+    text-align: center;
+    opacity: 0; /* Start hidden until a song is played */
+    transition: opacity 0.3s ease;
+}
+
+.light-mode .current-song {
+    color: #000; /* Black color for light mode */
+}
+
+.sidebar-toggle:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Sidebar styles */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #222;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+	background-color: rgba(24, 24, 24, 0.85); /* Added transparency */
+    padding: 20px 10px; /* Reduced padding for a cleaner fit */
+    overflow-x: hidden;
+    transform: translateX(-100%); /* Fully hides sidebar when closed */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Added background-color transition */
+    pointer-events: auto;
+    z-index: 100;
+}
+
+/* Centering the tools section */
+.tools {
+    display: flex;
+	position: absolute;
+	top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.sidebar h2 {
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+
+/* Style for text-based tool links */
+.tool-link {
+    font-size: 1rem;
+    color: #ffffff;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    margin: 8px 0;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.light-mode .tool-link {
+	color: #000;
+    background: transparent;
+}
+
+.tool-link:hover {
+    color: #FF6347; /* Hover color */
+}
+
+
+/* Minimalistic button style */
+.control-symbol {
+    font-size: 1rem;
+    color: #ffffff;
+    background: #444;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Audio player fixed at the bottom */
+.audio-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+    padding: 15px 0;
+    color: #ffffff;
+    text-align: center;
+	margin-top: auto;
+    margin-bottom: 30px; /* Space from bottom of sidebar */
+}
+
+.album-cover {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #333333;
+}
+
+/* Adjusted layout for the audio info to avoid shifting */
+.audio-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 5px 0;
+    color: #ffffff;
+    white-space: normal; /* Allows wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px; /* Limit the width of the title */
+}
+
+.light-mode .audio-info h3 {
+	color: #000;
+}
+
+.audio-info p {
+    font-size: 0.8rem;
+    color: #aaaaaa;
+    margin: 0;
+}
+
+.audio-controls {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.control-symbol {
+    font-size: 1.2rem;
+    color: #Fff; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.3s;
+}
+
+.light-mode .control-symbol {
+    color: #000;
+	background: none;
+}
+
+.control-symbol:hover {
+    color: #FF6347;
+}
+
+.light-mode .control-symbol:hover {
+    color: #FF6347;
+}
+
+.progress-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: #aaaaaa;
+    font-size: 0.8rem;
+}
+
+.progress-bar input[type="range"] {
+    flex: 1;
+    margin: 0 10px;
+    background-color: #FF6347;
+    cursor: pointer;
+    height: 4px;
+    border-radius: 2px;
+    appearance: none;
+}
+
+.progress-bar input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.light-mode .progress-bar input[type="range"]::-webkit-slider-thumb {
+	background-color: #000;
+}
+
+.progress-bar input[type="range"]:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+}
+
+/* Adjusted Font for Current Time and Duration */
+#current-time, #duration {
+    font-size: 0.7rem;
 }
