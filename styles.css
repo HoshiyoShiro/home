@@ -422,7 +422,7 @@ body {
 .tools {
     display: flex;
 	position: absolute;
-	top: 30%;
+	top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     flex-direction: column;
@@ -451,11 +451,11 @@ body {
 
 /* Style for text-based tool links */
 .tool-link {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #ffffff;
     background: transparent;
     border: none;
-    padding: 10px;
+    padding: 5px;
     margin: 8px 0;
     width: 100%;
     text-align: center;
@@ -493,11 +493,11 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: transparent;
-    padding: 15px 0;
+    padding: 10px 0;
     color: #ffffff;
     text-align: center;
 	margin-top: auto;
-    margin-bottom: 30px; /* Space from bottom of sidebar */
+    margin-bottom: 40px; /* Space from bottom of sidebar */
 }
 
 .album-cover {
@@ -560,10 +560,11 @@ body {
     color: #FF6347;
 }
 
+/* Progress Bar Styling */
 .progress-bar {
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 200px; /* Fixed width to match the volume bar */
     color: #aaaaaa;
     font-size: 0.8rem;
 }
@@ -589,7 +590,7 @@ body {
 }
 
 .light-mode .progress-bar input[type="range"]::-webkit-slider-thumb {
-	background-color: #000;
+    background-color: #000;
 }
 
 .progress-bar input[type="range"]:active::-webkit-slider-thumb {
@@ -599,4 +600,278 @@ body {
 /* Adjusted Font for Current Time and Duration */
 #current-time, #duration {
     font-size: 0.7rem;
+}
+
+/* Volume Bar Styling */
+.volume-bar {
+    display: flex;
+    align-items: center;
+    width: 200px; /* Fixed width to match the progress bar */
+    margin-top: 10px;
+    color: #aaaaaa;
+}
+
+.volume-bar span {
+    font-size: 1rem;
+    margin-right: 8px;
+}
+
+.volume-bar input[type="range"] {
+    flex: 1;
+    margin: 0;
+    background-color: #FF6347;
+    cursor: pointer;
+    height: 4px;
+    border-radius: 2px;
+    appearance: none;
+}
+
+.volume-bar input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.light-mode .volume-bar input[type="range"]::-webkit-slider-thumb {
+    background-color: #000;
+}
+
+.volume-bar input[type="range"]:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+}
+
+/* Volume Indicator Styling */
+#volume-indicator {
+    font-size: 0.8rem;
+    margin-left: 10px; /* Space between slider and volume indicator */
+    color: #aaaaaa;
+}
+
+
+/*Module for Tools*/
+
+/* General Overlay Styling */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Dark mode overlay background */
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Light Mode Overlay Background */
+.light-mode .overlay {
+    background: rgba(255, 255, 255, 0.7); /* Increased transparency for light mode */
+}
+
+/* Overlay Content */
+.overlay-content {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    max-width: 320px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Light Mode Overlay Content */
+.light-mode .overlay-content {
+    background-color: #ffffff;
+    color: #333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Close Button */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-button:hover {
+    color: #ff6347;
+}
+
+/* Light Mode Close Button */
+.light-mode .close-button {
+    color: #333;
+}
+
+.light-mode .close-button:hover {
+    color: #ff6347;
+}
+
+/* Title */
+.overlay-content h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.light-mode .overlay-content h2 {
+    color: #333;
+}
+
+/* Text Boxes, Text Areas, and Input Fields */
+.input-field, .textarea-field {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    outline: none;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.light-mode .input-field, .light-mode .textarea-field {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.textarea-field {
+    resize: vertical;
+    min-height: 100px;
+    text-align: left;
+}
+
+/* Buttons for Generate, Test, Convert */
+.button {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    background-color: #ff6347;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.1s;
+    box-sizing: border-box;
+}
+
+.button:hover {
+    background-color: #ff8367;
+    transform: scale(1.02);
+}
+
+/* Light Mode Button */
+.light-mode .button {
+    background-color: #ff7a64;
+}
+
+.light-mode .button:hover {
+    background-color: #ff937e;
+}
+
+/* File Select Button */
+.file-input {
+    display: inline-block;
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 1rem;
+    color: #e0e0e0;
+    background-color: #444;
+    border: 1px solid #333;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.file-input:hover {
+    background-color: #555;
+}
+
+/* Light Mode File Select Button */
+.light-mode .file-input {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.light-mode .file-input:hover {
+    background-color: #e0e0e0;
+}
+
+/* Numeric Input */
+.number-input {
+    width: 60px;
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    color: #e0e0e0;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 0.9rem;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.number-input:focus {
+    border-color: #ff6347;
+}
+
+/* Light Mode Numeric Input */
+.light-mode .number-input {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+/* Result Display Areas */
+.result-area, .json-output, .qr-display {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    overflow-wrap: break-word;
+}
+
+.light-mode .result-area, .light-mode .json-output, .light-mode .qr-display {
+    background-color: #f9f9f9;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+/* JSON Formatter Output */
+.json-output {
+    font-family: monospace;
+    text-align: left;
+    white-space: pre-wrap;
+}
+
+/* QR Code Display */
+.qr-display {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
 }
